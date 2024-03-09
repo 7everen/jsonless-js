@@ -1,0 +1,46 @@
+{
+  "name": "jsonless-js",
+  "author": "Dmytro Lazarenko",
+  "description": "A compressor and obfuscator for JSON",
+  "version": "1.0.0",
+  "licenses": [
+    {
+      "type": "Apache License 2.0",
+      "url": "https://github.com/7everen/jsonless-js/blob/main/LICENSE"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Dmytro Lazarenko",
+      "email": "dlazarenko.ua@gmail.com",
+      "web": "https://github.com/7everen/jsonless-js"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/7everen/jsonless-js.git"
+  },
+  "keywords": [
+    "obfuscate",
+    "compress",
+    "json"
+  ],
+  "homepage": "https://github.com/7everen/jsonless-js",
+  "readmeFilename": "README.md",
+  "main": "./main",
+  "dojoBuild": "package.js",
+  "icon": "https://raw.githubusercontent.com/7everen/jsonless-js/main/icons/icon-64.png",
+  "volo": {
+    "baseDir": "."
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^10.3.0"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "dependencies": {
+    "assert": "^2.1.0"
+  }
+}
