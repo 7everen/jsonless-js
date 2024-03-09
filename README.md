@@ -1,7 +1,99 @@
 # JsonLess <img src="https://raw.githubusercontent.com/7everen/jsonless-js/main/icons/icon-32.png" alt="icon for jsonless compressor/obfuscator">
 
-A compressor and obfuscator for JSON.
+Is a JavaScript library that compresses and obfuscates JSON.
 
 ## Introduction
+It was designed for performant compress large JSON which has duplicated data properties like in the example:
+```json
+{
+ "player1": {
+   "EfficiencyGameScore": 0,
+   "FastBreakPointsAttempted": 0,
+   "FastBreakPointsMade": 0
+  },
+  "player2": {
+   "EfficiencyGameScore": 3,
+   "FastBreakPointsAttempted": 2,
+   "FastBreakPointsMade": 0
+  },
+   ...
+}
 
-JsonLess is a JavaScript library to compress/decompress JSON data in efficient way.
+```
+
+Benefits:
+- Can be achieved `2-10` times less size depending on data.
+- More secure sending data, make it unreadable.
+- Cost-efficient than compression.
+- Support multiple languages - TBD
+
+## Performance
+| Libraries      | Compress time (seconds) | Original size to Compressed (times) |                
+|:---------------|------------------------:|------------------------------------:|
+| jsonpack       |                   2.532 |                                 2.3 |
+| compressjs     |                   2.250 |                                 3.9 |
+| jsonless-js    |                   0.261 |                                 4.3 |
+
+> **NOTE**  
+> Used the next [JSON Data](https://raw.githubusercontent.com/7everen/jsonless-js/main/test/test.json) with `1000` iteration.
+
+
+## Encode
+
+Example how to encode object to encoded object
+```js
+var jsonless = require('jsonless-js');
+
+var obj = {...};
+// options are optional
+var options = {
+    "symbol": "$" // '$' is default value. 
+}
+var encodedObj = jsonless.encode(obj, options);
+
+```
+> **NOTE**
+> No one property in JSON object should use character in `options.symbol`. By default, it is `$`.
+> `options` parameter can be omitted in `encoded` function
+
+Each encoded object consists `signature`. It is map of property names. It can be used as a key for decrypting encoded object.
+
+Example how to remove signature from encoded object
+```js
+var jsonless = require('jsonless-js');
+
+var encodedObjWithoutSignature = jsonless.withoutSignature(encodedObj);
+
+```
+
+Example how to get signature from encoded object
+```js
+var jsonless = require('jsonless-js');
+
+var signature = jsonless.getSignature(encodedObj);
+
+```
+
+## Decode
+
+Example how to decode object
+```js
+var jsonless = require('jsonless-js');
+
+var encodedObjWithSignature = [...];
+var decodedObj = jsonless.decode(encodedObjWithSignature);
+
+```
+
+Example how to decode object with removed signature
+```js
+var jsonless = require('jsonless-js');
+
+var encodedObjWithoutSignature = [...];
+var signature = [...];
+var options = {
+    "signature": signature
+}
+var decodedObj = jsonless.decode(encodedObjWithoutSignature, options);
+
+```
