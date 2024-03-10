@@ -49,9 +49,9 @@ describe('jsonless', function() {
     ];
 
     var object2Encoded = [
-        "0022300759",
-        "$0",
-        ["gid","0"]
+        "player1",
+        ["0022300759", "SAN", "$0"],
+        ["gid$htm","0$1"]
     ];
 
     var object1EncodedWithoutSignature = [
@@ -72,9 +72,14 @@ describe('jsonless', function() {
         "0$1$5"
     ];
 
-    var object2 = {
-        "gid": "0022300759"
-    };
+    var object2 = [
+        "player1",
+        {
+            "gid":"0022300759",
+            "htm": "SAN"
+        }
+    ]
+
 
     //var options = {"symbol": "$"};
 
@@ -93,7 +98,8 @@ describe('jsonless', function() {
         });
 
         it('encode object2', function() {
-            expect(jsonless.encode(object2)).to.eql(object2Encoded);
+            let encoded = jsonless.encode(object2);
+            expect(encoded).to.eql(object2Encoded);
         });
 
     });

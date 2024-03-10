@@ -11,7 +11,7 @@
             let symbol = options && options.symbol ? options.symbol : SYMBOL;
             let allProps = [];
             let allPropGroups = [];
-            let encodedObj = encodeSingle(objOrArr, allProps, allPropGroups);
+            let encodedObj = encodeSingle(objOrArr, allProps, allPropGroups, symbol);
             let signature = [allProps.join(symbol)];
             for (const propGroup of allPropGroups) {
                 signature.push(propGroup.join(symbol));
@@ -20,14 +20,14 @@
             return encodedObj;
         };
 
-        function encodeSingle(objOrArr, allProps, allPropGroups) {
+        function encodeSingle(objOrArr, allProps, allPropGroups, symbol) {
             let isObj = typeof objOrArr === 'object';
             let myPropGroup = [];
             let arr = [];
             if (isObj) {
                 if (objOrArr instanceof Array) {
                     for (const element of objOrArr) {
-                        let value = encodeSingle(element, allProps, allPropGroups);
+                        let value = encodeSingle(element, allProps, allPropGroups, symbol);
                         arr.push(value);
                     }
                 } else {
@@ -38,7 +38,7 @@
                             allProps.push(prop);
                         }
                         myPropGroup.push(index);
-                        let value = encodeSingle(objOrArr[prop], allProps, allPropGroups);
+                        let value = encodeSingle(objOrArr[prop], allProps, allPropGroups, symbol);
                         arr.push(value);
                     }
                     let index = indexOfGroup(myPropGroup, allPropGroups);
@@ -46,7 +46,7 @@
                         index = allPropGroups.length;
                         allPropGroups.push(myPropGroup);
                     }
-                    arr.push("$" + index);
+                    arr.push(symbol + index);
                 }
             } else {
                 return objOrArr;
@@ -57,16 +57,15 @@
         function indexOfGroup(myPropGroup, allPropGroups) {
             for (let i = 0; i < allPropGroups.length; i++) {
                 const propGroup = allPropGroups[i];
-                if (propGroup.length === myPropGroup.length) {
-                    let y = 0;
-                    for (; y < myPropGroup.length; y++) {
-                        if (myPropGroup[y] !== propGroup[y]) {
-                            break;
-                        }
+                if (propGroup.length !== myPropGroup.length) continue;
+                let y = 0;
+                for (; y < myPropGroup.length; y++) {
+                    if (myPropGroup[y] !== propGroup[y]) {
+                        break;
                     }
-                    if (y === myPropGroup.length) {
-                        return i;
-                    }
+                }
+                if (y === myPropGroup.length) {
+                    return i;
                 }
             }
             return -1;
@@ -120,7 +119,14 @@
             } else {
                 let arr = [];
                 for (let i = 0; i < len; i++) {
-                    arr.push(objOrArr[i]);
+                    let encodedValue = objOrArr[i];
+                    let value;
+                    if (typeof encodedValue === 'object') {
+                        value = decodeSingle(encodedValue, encodedValue.length, allProps, allPropGroups, symbol);
+                    } else {
+                        value = encodedValue;
+                    }
+                    arr.push(value);
                 }
                 return arr;
             }
