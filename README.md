@@ -25,7 +25,8 @@ Benefits:
 - Can be achieved `2-10` times less size depending on data.
 - More secure sending data, make it unreadable.
 - Cost-efficient than compression.
-- Support multiple languages - TBD
+- Support multiple languages
+  - [Rust](https://github.com/7everen/jsonless-rs)
 
 ## Performance
 | Libraries      | Compress time (seconds) | Original size to Compressed (times) |                
