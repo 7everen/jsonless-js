@@ -26,17 +26,20 @@ Benefits:
 - More secure sending data, make it unreadable.
 - Cost-efficient than compression.
 - Support multiple languages
-  - [Rust](https://github.com/7everen/jsonless-rs)
+  - [Rust/C/C++](https://github.com/7everen/jsonless-rs)
 
 ## Performance
 | Libraries      | Compress time (seconds) | Original size to Compressed (times) |                
 |:---------------|------------------------:|------------------------------------:|
 | jsonpack       |                   2.532 |                                 2.3 |
 | compressjs     |                   2.250 |                                 3.9 |
+| gzip           |                   0.865 |                                 7.1 |
 | jsonless-js    |                   0.261 |                                 4.3 |
 
 > **NOTE**  
 > Used the next [JSON Data](https://raw.githubusercontent.com/7everen/jsonless-js/main/test/test.json) with `1000` iteration.
+>
+> Links: [gzip](https://www.npmjs.com/package/zlib), [compressjs](https://www.npmjs.com/package/compressjs), [jsonpack](https://www.npmjs.com/package/jsonpack)
 
 
 ## Encode
