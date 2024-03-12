@@ -49,16 +49,9 @@ Example how to encode object to encoded object
 var jsonless = require('jsonless-js');
 
 var obj = {...};
-// options are optional
-var options = {
-    "symbol": "$" // '$' is default value. 
-}
 var encodedObj = jsonless.encode(obj, options);
 
 ```
-> **NOTE**
-> No one property in JSON object should use character in `options.symbol`. By default, it is `$`.
-> `options` parameter can be omitted in `encoded` function
 
 Each encoded object consists `signature`. It is map of property names. It can be used as a key for decrypting encoded object.
 

@@ -33,43 +33,37 @@ describe('jsonless', function() {
 
     var object1Encoded = [
         "0022300759",
-        [7,2.33333333333333,1,"$0"],
+        [7,2.33333333333333,1,1],
         [
-            [[1,2,3,4],0,1,"$0"],
-            [2,0,3,"$0"],
-            "$1"
+            [[1,2,3,4,0],0,1,1],
+            [2,0,3,1],
+            2
         ],
-        "$2",
+        3,
         [
-        "gid$htm$Assists$AssistsTurnoverRatio$BlocksReceived$players$201143$201567",
-            "2$3$4",
-            "6$7",
-            "0$1$5"
+            ["gid","htm","Assists","AssistsTurnoverRatio","BlocksReceived","players","201143","201567"],
+            [2,3,4],
+            [6,7],
+            [0,1,5]
         ]
-    ];
-
-    var object2Encoded = [
-        "player1",
-        ["0022300759", "SAN", "$0"],
-        ["gid$htm","0$1"]
     ];
 
     var object1EncodedWithoutSignature = [
         "0022300759",
-        [7,2.33333333333333,1,"$0"],
+        [7,2.33333333333333,1,1],
         [
-            [[1,2,3,4],0,1,"$0"],
-            [2,0,3,"$0"],
-            "$1"
+            [[1,2,3,4,0],0,1,1],
+            [2,0,3,1],
+            2
         ],
-        "$2"
+        3
     ];
 
     var object1EncodedSignature = [
-        "gid$htm$Assists$AssistsTurnoverRatio$BlocksReceived$players$201143$201567",
-        "2$3$4",
-        "6$7",
-        "0$1$5"
+        ["gid","htm","Assists","AssistsTurnoverRatio","BlocksReceived","players","201143","201567"],
+        [2,3,4],
+        [6,7],
+        [0,1,5]
     ];
 
     var object2 = [
@@ -78,10 +72,40 @@ describe('jsonless', function() {
             "gid":"0022300759",
             "htm": "SAN"
         }
-    ]
+    ];
 
+    var object2Encoded = [
+        "player1",
+        ["0022300759", "SAN", 1],
+        0,
+        [
+            ["gid","htm"],
+            [0,1]
+        ]
+    ];
 
-    //var options = {"symbol": "$"};
+    var object3 = [
+        {
+            "familyName": "Barnes",
+            "firstName": "Harrison"
+        },
+        {
+            "familyName": "Barnes",
+            "firstName": "Harrison"
+        }
+    ];
+
+    var object3Encoded = [
+        [0, 0, 1],
+        [0, 0, 1],
+        0,
+        [
+            ["familyName","firstName",2],
+            ["Barnes",0],
+            ["Harrison",1],
+            [0,1]
+        ]
+    ];
 
     describe('encode', function() {
 
@@ -102,6 +126,12 @@ describe('jsonless', function() {
             expect(encoded).to.eql(object2Encoded);
         });
 
+        it('encode object3', function() {
+            let options = {"variantFields": ["familyName", "firstName"]};
+            let encoded = jsonless.encode(object3, options);
+            expect(encoded).to.eql(object3Encoded);
+        });
+
     });
 
     describe('decode', function() {
@@ -117,6 +147,10 @@ describe('jsonless', function() {
 
         it('decode object2', function() {
             expect(jsonless.decode(object2Encoded)).to.eql(object2);
+        });
+
+        it('decode object3', function() {
+            expect(jsonless.decode(object3Encoded)).to.eql(object3);
         });
 
     });
