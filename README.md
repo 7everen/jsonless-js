@@ -34,7 +34,7 @@ Benefits:
 | jsonpack       |                   2.532 |                                 2.3 |
 | compressjs     |                   2.250 |                                 3.9 |
 | gzip           |                   0.865 |                                 7.1 |
-| jsonless-js    |                   0.261 |                                 4.3 |
+| jsonless-js    |                   0.118 |                                 4.3 |
 
 > **NOTE**  
 > Used the next [JSON Data](https://raw.githubusercontent.com/7everen/jsonless-js/main/test/test.json) with `1000` iteration.
