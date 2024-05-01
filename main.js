@@ -64,16 +64,18 @@
                     }
                     myPropGroup.push(index);
                     let value = objOrArr[prop];
-                    if (typeof value === 'object') {
+                    const isObject = value !== null && typeof value === 'object';
+                    if (isObject) {
                         value = encodeSingle(value, allProps, allPropGroups, variantFieldMap);
                     }
                     if (variantFieldMap) {
                         let mapOfValueAndIndex = variantFieldMap.get(prop);
-                        if (mapOfValueAndIndex && typeof value !== 'object') {
-                            let index = mapOfValueAndIndex.get(value);
+                        if (mapOfValueAndIndex && !isObject) {
+                            let valueInt = value === null ? undefined : value;
+                            let index = mapOfValueAndIndex.get(valueInt);
                             if (index === undefined) {
                                 index = mapOfValueAndIndex.size;
-                                mapOfValueAndIndex.set(value, index);
+                                mapOfValueAndIndex.set(valueInt, index);
                             }
                             value = index;
                         }

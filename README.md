@@ -94,3 +94,21 @@ var options = {
 var decodedObj = jsonless.decode(encodedObjWithoutSignature, options);
 
 ```
+
+
+## Test
+
+Install
+```shell
+npm install -g mocha
+```
+
+Run all test
+```shell
+mocha test/test.js
+```
+
+Run test `encode object1`
+```shell
+mocha --grep "encode object1" test/test.js
+```

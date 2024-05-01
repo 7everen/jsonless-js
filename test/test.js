@@ -70,13 +70,13 @@ describe('jsonless', function() {
         "player1",
         {
             "gid":"0022300759",
-            "htm": "SAN"
+            "htm": null
         }
     ];
 
     var object2Encoded = [
         "player1",
-        ["0022300759", "SAN", 1],
+        ["0022300759", null, 1],
         0,
         [
             ["gid","htm"],
